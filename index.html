@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe Game</title>
+    <style> /* CSS Styles */
+        #game-board {
+           width: 300px;
+           height: 300px;
+           margin: 50px auto;
+           display: grid;
+           grid-template-columns: repeat(3, 1fr);
+           grid-gap: -1px;
+       }
+       
+       .cell {
+           position: relative;
+           width: 100px;
+           height: 100px;
+           background-color: transparent; /* Transparent background */
+           border: 2px solid #000; /* Add a border color */
+           display: flex;
+           align-items: center;
+           justify-content: center;
+           cursor: pointer;
+           transition: background-color 0.3s;
+       }
+       
+       .cell img {
+           position: absolute;
+           width: 80%;
+           height: 80%;
+           pointer-events: none; /* Make the image non-clickable */
+       }
+       
+       #progress-dashboard {
+           text-align: center;
+           margin-top: 20px;
+           font-size: 1.5em;
+       }
+       
+       #restart-button {
+           margin-top: 20px;
+           padding: 10px 20px;
+           font-size: 1.2em;
+           background-color: #27ae60;
+           color: white;
+           border: none;
+           cursor: pointer;
+           transition: background-color 0.3s;
+           justify-content: center; /* Center the button horizontally within the container */
+       }
+       
+       #restart-button:hover {
+           background-color: #219653;
+       }</style>
+</head>
+<body>
+    <div id="game-board">
+        <div class="row">
+            <div class="cell" data-value=""></div>
+            <div class="cell" data-value=""></div>
+            <div class="cell" data-value=""></div>
+        </div>
+        <div class="row">
+            <div class="cell" data-value=""></div>
+            <div class="cell" data-value=""></div>
+            <div class="cell" data-value=""></div>
+        </div>
+        <div class="row">
+            <div class="cell" data-value=""></div>
+            <div class="cell" data-value=""></div>
+            <div class="cell" data-value=""></div>
+        </div>
+    </div>
+
+    <!-- Progress Dashboard -->
+    <div id="progress-dashboard">
+        <h2>Game Progress</h2>
+        <div id="current-player">Current Player: X</div>
+        <div id="game-status">Status: In Progress</div>
+    </div>
+
+    <!-- Restart Button -->
+    <button id="restart-button">Restart Game</button>
+
+    <script>
+        // JavaScript code
+        document.addEventListener("DOMContentLoaded", function () {
+            const cells = document.querySelectorAll('.cell');
+            const restartButton = document.getElementById('restart-button');
+            let currentPlayer = 'X';
+            let gameEnded = false;
+
+            cells.forEach(cell => {
+                cell.addEventListener('click', handleCellClick);
+            });
+
+            restartButton.addEventListener('click', restartGame);
+
+            function handleCellClick(event) {
+                if (gameEnded) return;
+
+                const cell = event.target;
+                if (!cell.dataset.value) {
+                    cell.dataset.value = currentPlayer;
+                    cell.innerHTML = `<img src="/${currentPlayer}.png" alt="${currentPlayer}">`;
+
+                    if (checkWin()) {
+                        updateProgressDashboard(`Player ${currentPlayer} wins!`, 'Game Over');
+                        gameEnded = true;
+                        return;
+                    } else if (checkDraw()) {
+                        updateProgressDashboard("It's a draw!", 'Game Over');
+                        gameEnded = true;
+                        return;
+                    } else {
+                        currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+                        updateProgressDashboard(`Current Player: ${currentPlayer}`, 'In Progress');
+                    }
+                } else {
+                    alert('This cell is already occupied. Please choose another one.');
+                }
+            }
+
+            function checkWin() {
+                const winningConditions = [
+                    [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
+                    [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
+                    [0, 4, 8], [2, 4, 6]             // Diagonals
+                ];
+
+                for (let condition of winningConditions) {
+                    const [a, b, c] = condition;
+                    if (cells[a].dataset.value &&
+                        cells[a].dataset.value === cells[b].dataset.value &&
+                        cells[a].dataset.value === cells[c].dataset.value) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+
+            function checkDraw() {
+                return [...cells].every(cell => cell.dataset.value !== '');
+            }
+
+            function updateProgressDashboard(currentPlayerText, gameStatusText) {
+                document.getElementById('current-player').textContent = currentPlayerText;
+                document.getElementById('game-status').textContent = `Status: ${gameStatusText}`;
+            }
+
+            function restartGame() {
+                cells.forEach(cell => {
+                    cell.dataset.value = '';
+                    cell.innerHTML = '';
+                });
+                currentPlayer = 'X';
+                gameEnded = false;
+                updateProgressDashboard('Current Player: X', 'In Progress');
+            }
+        });
+    </script>
+</body>
+</html>
