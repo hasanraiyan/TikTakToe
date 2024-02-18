@@ -107,7 +107,6 @@
                 if (!cell.dataset.value) {
                     cell.dataset.value = currentPlayer;
                     cell.innerHTML = `<img src="https://hasanraiyan.github.io/TikTakToe/${currentPlayer}.png" alt="${currentPlayer}">`;
-
                     if (checkWin()) {
                         updateProgressDashboard(`Player ${currentPlayer} wins!`, 'Game Over');
                         gameEnded = true;
