@@ -5,57 +5,74 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tic Tac Toe Game</title>
-    <style> /* CSS Styles */
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
         #game-board {
-           width: 300px;
-           height: 300px;
-           margin: 50px auto;
-           display: grid;
-           grid-template-columns: repeat(3, 1fr);
-           grid-gap: -1px;
-       }
-       
-       .cell {
-           position: relative;
-           width: 100px;
-           height: 100px;
-           background-color: transparent; /* Transparent background */
-           border: 2px solid #000; /* Add a border color */
-           display: flex;
-           align-items: center;
-           justify-content: center;
-           cursor: pointer;
-           transition: background-color 0.3s;
-       }
-       
-       .cell img {
-           position: absolute;
-           width: 80%;
-           height: 80%;
-           pointer-events: none; /* Make the image non-clickable */
-       }
-       
-       #progress-dashboard {
-           text-align: center;
-           margin-top: 20px;
-           font-size: 1.5em;
-       }
-       
-       #restart-button {
-           margin-top: 20px;
-           padding: 10px 20px;
-           font-size: 1.2em;
-           background-color: #27ae60;
-           color: white;
-           border: none;
-           cursor: pointer;
-           transition: background-color 0.3s;
-           justify-content: center; /* Center the button horizontally within the container */
-       }
-       
-       #restart-button:hover {
-           background-color: #219653;
-       }</style>
+            width: 300px;
+            height: 300px;
+            margin: 50px auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+     
+          
+        }
+
+        .cell {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            background-color: #fff;
+            border: 1px solid #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .cell:hover {
+            background-color: #f0f0f0;
+        }
+
+        .cell img {
+            width: 80%;
+            height: 80%;
+            pointer-events: none;
+        }
+
+        #progress-dashboard {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+
+        #restart-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: block;
+            margin: 20px auto;
+        }
+
+        #restart-button:hover {
+            background-color: #2980b9;
+        }
+
+        h2 {
+            margin-top: 0;
+        }
+    </style>
 </head>
 <body>
     <div id="game-board">
